@@ -4,10 +4,10 @@ FactoryBot.define do
     association :user
     
     # игра только начата
-    finished_at nil
-    current_level 0
-    is_failed false
-    prize 0
+    finished_at { nil }
+    current_level { 0 }
+    is_failed { false }
+    prize { 0 }
     
     factory :game_with_questions do
       after(:build) { |game|
