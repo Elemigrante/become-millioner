@@ -7,7 +7,7 @@ FactoryBot.define do
     c { 2 }
     d { 1 }
     
-    association :user
+    association :question
     association :game
   end
 end
