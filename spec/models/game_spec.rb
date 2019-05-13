@@ -64,6 +64,10 @@ RSpec.describe Game, type: :model do
       expect(game_w_questions.status).to eq(:in_progress)
       expect(game_w_questions.finished?).to be_falsey
     end
+
+    it 'does current_game_question returns the current, still unanswered game question' do
+      expect(game_w_questions.current_game_question).to eq(game_w_questions.game_questions.first)
+    end
     
     # Игрок взял деньги
     it 'take_money! finishes the game' do
