@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+ruby '2.5.0'
 gem 'rails', '~> 4.2.10'
 
 gem 'devise', '~> 4.6.1'
