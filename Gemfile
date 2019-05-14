@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
 gem 'rails', '~> 4.2.10'
-gem 'puma'
 
 gem 'devise', '~> 4.6.1'
 gem 'devise-i18n'
