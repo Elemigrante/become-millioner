@@ -20,6 +20,33 @@ RSpec.describe GamesController, type: :controller do
       expect(response).to redirect_to(new_user_session_path) # devise должен отправить на логин
       expect(flash[:alert]).to be # во flash должен быть прописана ошибка
     end
+    
+    # Аноним не может создать игру
+    it 'does not create game' do
+      generate_questions(15)
+      post :create
+      
+      expect(response.status).not_to eq(200)
+      expect(response).to redirect_to(new_user_session_path)
+      expect(flash[:alert]).to be
+    end
+    
+    # Аноним не может ответить на вопрос
+    it 'does not answer the question ' do
+      put :answer, id: game_w_questions.id, letter: game_w_questions.current_game_question.correct_answer_key
+
+      expect(response.status).not_to eq(200)
+      expect(response).to redirect_to(new_user_session_path)
+      expect(flash[:alert]).to be
+    end
+
+    it 'does not take money' do
+      put :take_money, id: game_w_questions.id
+      
+      expect(response.status).not_to eq(200)
+      expect(response).to redirect_to(new_user_session_path)
+      expect(flash[:alert]).to be
+    end
   end
   
   # Группа тестов на экшены контроллера, доступных залогиненным юзерам
