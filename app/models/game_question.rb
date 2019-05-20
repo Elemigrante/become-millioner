@@ -5,10 +5,10 @@
 class GameQuestion < ActiveRecord::Base
   # Игровой вопрос, конечно, принадлежит конкретной игре.
   belongs_to :game
-
+  
   # Игровой вопрос знает, из какого вопроса берется информация
   belongs_to :question
-
+  
   # Создаем в этой модели виртуальные геттеры text, level, значения которых
   # автоматически берутся из связанной модели question.
   #
@@ -21,16 +21,17 @@ class GameQuestion < ActiveRecord::Base
   # game_question.question.text
   #
   delegate :text, :level, to: :question, allow_nil: true
-
+  
   # Без игры и вопроса — игровой вопрос не имеет смысла
   validates :game, :question, presence: true
-
+  
   # В полях a, b, c и d прячутся индексы ответов из объекта :game. Каждый из
   # них — целое число от 1 до 4.
-  validates :a, :b, :c, :d, inclusion: {in: 1..4}
-
+  validates :a, :b, :c, :d, inclusion: { in: 1..4 }
+  
+  serialize :help_hash, Hash
   # Основные методы для доступа к данным в шаблонах и контроллерах:
-
+  
   # Метод variants возвращает хэш с ключами a..d и значениями — тектом ответов:
   #
   # {
@@ -46,23 +47,33 @@ class GameQuestion < ActiveRecord::Base
       'd' => question.read_attribute("answer#{d}")
     }
   end
-
+  
   # Метод answer_correct? проверяет правильность ответа по букве. Возвращает
   # true, если переданная буква (строка или символ) содержит верный ответ и
   # false во всех других случаях.
   def answer_correct?(letter)
     correct_answer_key == letter.to_s.downcase
   end
-
+  
   # Метод correct_answer_key возвращает ключ правильного ответа 'a', 'b', 'c',
   # или 'd'. Обратите внимание, что в переменных a, b, c и d игрового вопроса
   # лежат числа от 1 до 4, но мы не знаем, в какой букве какое число.
   def correct_answer_key
-    {a => 'a', b => 'b', c => 'c', d => 'd'}[1]
+    { a => 'a', b => 'b', c => 'c', d => 'd' }[1]
   end
-
+  
   # Метод correct_answer возвращает текст правильного ответа
   def correct_answer
     variants[correct_answer_key]
+  end
+  
+  def add_audience_help
+    self.help_hash[:audience_help] = {
+      'a' => rand(100),
+      'b' => rand(100),
+      'c' => rand(100),
+      'd' => rand(100)
+    }
+    save
   end
 end
