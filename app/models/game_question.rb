@@ -88,6 +88,17 @@ class GameQuestion < ActiveRecord::Base
     save
   end
 
+  # Добавляем в help_hash подсказку друга и сохраняем объект
+  def add_friend_call
+    # Массив ключей
+    keys_to_use = keys_to_use_in_help
+  
+    self.help_hash[:friend_call] =
+      GameHelpGenerator.friend_call(keys_to_use, correct_answer_key)
+  
+    save
+  end
+  
   private
 
   # Рассчитываем какие ключи нам доступны в подсказках
@@ -99,6 +110,4 @@ class GameQuestion < ActiveRecord::Base
   
     keys_to_use
   end
-
-
 end

@@ -87,5 +87,16 @@ RSpec.describe GameQuestion, type: :model do
       expect(ff).to include('b') # должен остаться правильный вариант
       expect(ff.size).to eq 2 # всего должно остаться 2 варианта
     end
+
+    # Проверяем работу подсказки friend_call
+    it 'correct friend_call' do
+      expect(game_question.help_hash).not_to include(:friend_call)
+      game_question.add_friend_call
+  
+      expect(game_question.help_hash).to include(:friend_call)
+      fc = game_question.help_hash[:friend_call]
+  
+      expect(fc).to match(/считает, что это вариант [ABCD]/)
+    end
   end
 end
