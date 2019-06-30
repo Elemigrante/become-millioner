@@ -13,6 +13,8 @@ gem 'twitter-bootstrap-rails'
 gem 'font-awesome-rails'
 gem 'russian'
 
+gem 'dotenv-rails'
+
 group :development, :test do
   gem 'sqlite3'
   gem 'byebug'
