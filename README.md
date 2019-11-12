@@ -1,7 +1,7 @@
-## Who Wants to Be a Millionaire?
+## Who Wants to Be a Millionaire in Russia?
 
 ### Description
-
+Language Russian.
 Web app based on the [famous game](https://en.wikipedia.org/wiki/Who_Wants_to_Be_a_Millionaire?).
 
 App covered with views, models, controllers and features tests.
